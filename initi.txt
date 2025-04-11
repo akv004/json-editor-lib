@@ -34,3 +34,10 @@ Here is a summary of the commands executed:
    cd ../../../examples/react-app
    pnpm create vite . --template react-ts
    ```
+
+
+ 7. Avoid going into subfolders and running npm install or pnpm install inside them — it will break workspace linking and cause node_modules duplication.
+
+    Always stay in root and do
+    pnpm install              # Install all
+    pnpm add react --filter json-editor-react     # For specific workspace
