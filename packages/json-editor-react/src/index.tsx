@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { JsonValue } from 'json-core';
 import { renderJsonOnCanvas } from './canvas/renderer';
+import { updateJsonAtPath } from './utils/updateJsonAtPath';
+
 
 interface JsonEditorProps {
     json: JsonValue;
@@ -9,10 +11,11 @@ interface JsonEditorProps {
 
 export const JsonEditor: React.FC<JsonEditorProps> = ({ json, onChange }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [editableLine, setEditableLine] = useState<{
+    const [editableLine, setEditableLine,] = useState<{
         y: number;
         text: string;
         index: number;
+        keyPath?: string[];
     } | null>(null);
     const [inputValue, setInputValue] = useState('');
 
@@ -28,25 +31,24 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ json, onChange }) => {
     }, [json]);
 
     const handleSave = () => {
-        // 🧠 This is mock logic — we'll replace it with true path parsing later
+        if (!editableLine) return;
+
         try {
-            if (typeof json !== 'object' || json === null || Array.isArray(json)) {
-                alert('Editing supported only for root objects at this stage.');
-                return;
-            }
+            const parsedValue = JSON.parse(inputValue.split(':').slice(1).join(':').trim().replace(/,$/, ''));
 
-            const newJson = { ...json };
+            const updated = updateJsonAtPath(
+                json,
+                editableLine.keyPath || [],
+                parsedValue
+            );
 
-            // Simulate value change (replace value in JSON string for now)
-            const edited = [...JSON.stringify(json, null, 2).split('\n')];
-            edited[editableLine!.index] = inputValue;
-            const updated = JSON.parse(edited.join('\n'));
             onChange?.(updated);
             setEditableLine(null);
         } catch (err) {
-            alert('Invalid edit. Please enter valid JSON.');
+            alert('Failed to parse edited value.');
         }
     };
+
 
     return (
         <div style={{ position: 'relative', border: '1px solid #ccc' }}>
@@ -69,6 +71,9 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ json, onChange }) => {
                     }}
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSave();
+                    }}
                     onBlur={handleSave}
                     autoFocus
                 />

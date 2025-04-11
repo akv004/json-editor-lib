@@ -1,7 +1,7 @@
 import { JsonValue } from 'json-core';
 
 interface RenderOptions {
-    onLineClick?: (y: number, line: string, index: number) => void;
+    onLineClick?: (y: number, line: string, index: number, keyPath: string[]) => void;
 }
 
 export function renderJsonOnCanvas(
@@ -27,10 +27,13 @@ export function renderJsonOnCanvas(
 
     canvas.onclick = (e: MouseEvent) => {
         const y = e.offsetY;
-        const lineIndex = Math.floor((y - padding) / lineHeight);
+        const lineIndex = Math.floor((y - padding) / lineHeight); // ✅ Required line
         const line = lines[lineIndex];
+
         if (line) {
-            options?.onLineClick?.(padding + lineIndex * lineHeight, line, lineIndex);
+            const fakePath = ['mockKey']; // Replace with actual logic later
+            options?.onLineClick?.(padding + lineIndex * lineHeight, line, lineIndex, fakePath);
         }
     };
+
 }
