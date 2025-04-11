@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
@@ -20,7 +21,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Monorepo support */
+    "baseUrl": "../../",
+    "paths": {
+      "@core/*": ["packages/json-core/src/*"],
+      "@editor/*": ["packages/json-editor-react/src/*"]
+    }
   },
   "include": ["src"]
 }
