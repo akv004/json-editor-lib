@@ -1,18 +1,9 @@
 {
   "name": "json-core",
-  "main": "src/index.tsx",
   "version": "1.0.0",
+  "main": "src/index.ts",
   "type": "module",
-  "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.8.0",
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "test": "vitest run"
   }
 }
