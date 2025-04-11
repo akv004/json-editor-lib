@@ -1,0 +1,36 @@
+Here is a summary of the commands executed:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/akv004/json-editor-lib.git
+   ```
+
+2. **Initialize a new `package.json` in the root directory**:
+   ```bash
+   pnpm init
+   ```
+
+3. **Create directories for packages and examples**:
+   ```bash
+   mkdir -p packages/json-core/src
+   mkdir -p packages/json-editor-react/src
+   mkdir -p examples/react-app/src
+   ```
+
+4. **Initialize `package.json` for `json-core`**:
+   ```bash
+   cd packages/json-core
+   pnpm init
+   ```
+
+5. **Initialize `package.json` for `json-editor-react`**:
+   ```bash
+   cd ../json-editor-react
+   pnpm init
+   ```
+
+6. **Navigate to the `react-app` example and create a Vite project**:
+   ```bash
+   cd ../../../examples/react-app
+   pnpm create vite . --template react-ts
+   ```
