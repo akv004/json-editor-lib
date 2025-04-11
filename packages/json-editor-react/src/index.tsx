@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { JsonValue } from './types/json';
+import { JsonValue } from 'json-core';
 import { renderJsonOnCanvas } from './canvas/renderer';
 
 interface JsonEditorProps {

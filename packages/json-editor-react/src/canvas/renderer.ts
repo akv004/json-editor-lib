@@ -1,4 +1,4 @@
-import { JsonValue } from '../types/json';
+import { JsonValue }  from 'json-core';
 
 export function renderJsonOnCanvas(
     canvas: HTMLCanvasElement,
