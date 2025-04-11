@@ -34,20 +34,28 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ json, onChange }) => {
         if (!editableLine) return;
 
         try {
-            const parsedValue = JSON.parse(inputValue.split(':').slice(1).join(':').trim().replace(/,$/, ''));
+            const [key, valuePart] = inputValue.split(':');
+            const cleanKey = key.replace(/["]/g, '').trim();
+            const rawValue = valuePart.trim().replace(/,$/, '');
+            const parsedValue = JSON.parse(rawValue);
 
-            const updated = updateJsonAtPath(
-                json,
-                editableLine.keyPath || [],
-                parsedValue
-            );
+            if (typeof json !== 'object' || json === null || Array.isArray(json)) {
+                alert('Only object-level JSON supported for editing.');
+                return;
+            }
+
+            const updated = {
+                ...json,
+                [cleanKey]: parsedValue
+            };
 
             onChange?.(updated);
             setEditableLine(null);
         } catch (err) {
-            alert('Failed to parse edited value.');
+            alert('Failed to parse value. Try valid JSON like: "name": "New Name"');
         }
     };
+
 
 
     return (
