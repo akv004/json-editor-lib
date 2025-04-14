@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FullTextEditor from './components/FullTextEditor';
-import {JsonValue} from "@core/types";
+import {JsonValue} from "json-core";
 
 const JsonEditor: React.FC = () => {
     const [json, setJson] = useState<JsonValue>({ name: 'Amit', age: 35 });
