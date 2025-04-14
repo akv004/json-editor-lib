@@ -1,31 +1,58 @@
 import React, { useState } from 'react';
 import FullTextEditor from './components/FullTextEditor';
-import {JsonValue} from "json-core";
+import { JsonValue } from 'json-core'; // ✅ pulled via package boundary, not by direct file path
 
 const JsonEditor: React.FC = () => {
-    const [json, setJson] = useState<JsonValue>({ name: 'Amit', age: 35 });
+    const [json, setJson] = useState<JsonValue>({
+        name: 'Amit',
+        age: 35,
+        tags: ['typescript', 'json-editor'],
+    });
+
     const [isEditing, setIsEditing] = useState(false);
 
     return (
-        <div>
+        <div style={{ padding: 24, fontFamily: 'sans-serif' }}>
+            <h2>🧩 JSON Editor</h2>
+
             {isEditing ? (
                 <FullTextEditor
                     json={json}
-                    onSave={(updatedJson:JsonValue) => {
+                    onSave={(updatedJson) => {
                         setJson(updatedJson);
                         setIsEditing(false);
                     }}
-
                     onCancel={() => setIsEditing(false)}
                 />
             ) : (
-                <div>
-                    {/* Replace this with your Canvas viewer component */}
-                    <pre>{JSON.stringify(json, null, 2)}</pre>
-                    <button onClick={() => setIsEditing(true)} style={{ marginTop: 8 }}>
+                <>
+          <pre
+              style={{
+                  background: '#f6f8fa',
+                  border: '1px solid #ddd',
+                  padding: 16,
+                  borderRadius: 6,
+                  fontSize: 14,
+              }}
+          >
+            {JSON.stringify(json, null, 2)}
+          </pre>
+
+                    <button
+                        onClick={() => setIsEditing(true)}
+                        style={{
+                            marginTop: 12,
+                            padding: '6px 12px',
+                            background: '#007bff',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: 4,
+                            cursor: 'pointer',
+                        }}
+                    >
                         ✏️ Edit as JSON
                     </button>
-                </div>
+                </>
             )}
         </div>
     );
